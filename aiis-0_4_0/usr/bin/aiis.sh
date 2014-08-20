@@ -18,5 +18,6 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-USER = whoami
+#Capturamos primero 
+USER=$(eval whoami)
 gksu /usr/share/aiis/aiis.py $USER
