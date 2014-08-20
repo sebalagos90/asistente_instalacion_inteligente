@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=AIIS Linux
+GenericName=AIIS
+Comment=Asistente de Instalación Inteligente de Software para Sistemas GNU/Linux basados en Ubuntu 14.04. Ayuda a los usuarios con la instalación del software que necesitarán para realizar sus actividades.
+Exec=gksu /usr/bin/aiis.sh
+Icon=synaptic
+Terminal=false
+Categories=GTK;Development;IDE;
+Name[es_CL]=Asistente de Instalación Inteligente de Software
