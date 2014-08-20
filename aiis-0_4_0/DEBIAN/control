@@ -6,11 +6,5 @@ Architecture: i386
 Depends: python3-gi,gksu
 Installed-Size: 195584
 Maintainer: Sebastian Nolberto Lagos Gutierrez <slagosgutierrez@gmail.com>
-Description: Asistente de instalación inteligente de software para GNU/Linux le ayuda a instalar el software que usted necesita, de forma automática y transparente. Este software está pensado en primera instancia para usuarios relacionados con la informática.
-
-
-
-
-
-
-
+Description: Asistente de instalación inteligente de software para GNU/Linux
+  Este asistente le ayuda a instalar el software que usted necesita, de forma automática y transparente. Este software está pensado en primera instancia para usuarios relacionados con la informática.

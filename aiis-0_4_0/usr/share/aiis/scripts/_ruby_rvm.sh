@@ -1,8 +1,7 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
-
 #Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 14.04
-#Archivo que ejecuta el programa principal
+#Scripts de instalación de software de terceros (fuera de los repositorios oficiales de Ubuntu)
     #Copyright (C) <2014>  <Sebastian Nolberto Lagos Gutierrez, slagosgutierrez@gmail.com, Arica, Chile>
 
     #This program is free software: you can redistribute it and/or modify
@@ -18,5 +17,19 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-USER = whoami
-gksu /usr/share/aiis/aiis.py $USER
+#Conocimientos extraidos de
+#Etel Sverdlov
+#https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-on-ubuntu-12-04-lts-precise-pangolin-with-rvm
+
+export DEBIAN_FRONTEND=noninteractive
+#Instalando dependencias de Ruby on Rails
+sudo apt-get install curl
+
+#OJO se debe hacer como usuario normal
+\curl -L https://get.rvm.io | bash -s stable
+source ~/.rvm/scripts/rvm
+rvm requirements
+rvm install ruby
+rvm use ruby --default
+rvm rubygems current
+gem install rails

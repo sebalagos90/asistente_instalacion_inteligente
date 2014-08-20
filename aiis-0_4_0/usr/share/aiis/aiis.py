@@ -26,10 +26,11 @@ import re
 from funciones import *
 from lista_software import diccionario_software
 import subprocess
+import sys
 
-			
-class Asistente_Inteligente:  
-	
+
+class Asistente_Inteligente:
+
 	def __init__(self):
 		self.cierreCiclo = False
 		self.cajaPrincipal = constructor.get_object("boxVentana")
@@ -46,13 +47,13 @@ class Asistente_Inteligente:
 		#img4 = constructor.get_object("imgProgramas") si implemento que muestre la lista de programas a instalar
 		img5 = constructor.get_object("imgInstalacion")
 		img6 = constructor.get_object("imgFinalizar")
-		
+
 		#Lista de las vistas de la interfaz
 		self.lista_vistas = [vent1,vent2,vent3,vent4]
-		
+
 		#Lista de las imagenes del estado de avance de la interfaz
 		self.lista_avance = [img2,img3,img5,img6]
-		
+
 		self.estado_actual = img1
 		self.txtRespuesta = constructor.get_object("txtRespuesta")
 		self.progreso = constructor.get_object("progressbar")
@@ -63,13 +64,13 @@ class Asistente_Inteligente:
 		self.mensajeFinal = constructor.get_object("mensajeFinal")
 		self.dialogoConfirmacion = constructor.get_object("dialogoConfirmacion")
 		self.mensajeConfirmacion = constructor.get_object("labelConfirmacion")
-		self.mensajeInstalacion = constructor.get_object("mensajeInstalacion")	
+		self.mensajeInstalacion = constructor.get_object("mensajeInstalacion")
 		self.estado = constructor.get_object("estadoInstalacion")
-		
+
 	def ocultarError(self, object, data=None):
 		ventana.set_sensitive(True)
 		self.ventError.hide()
-	
+
 	def siguiente_vista_interno(self):
 		print("Cambiando interfaz a la siguiente")
 		vista_siguiente = self.lista_vistas.pop(0)
@@ -80,7 +81,7 @@ class Asistente_Inteligente:
 		nuevo_estado = self.lista_avance.pop(0)
 		nuevo_estado.set_from_stock("gtk-go-forward",Gtk.IconSize.MENU)
 		self.estado_actual = nuevo_estado
-		
+
 	def siguiente_vista(self, object, data=None):
 		vista_siguiente = self.lista_vistas.pop(0)
 		self.cajaPrincipal.remove(self.vista_actual)
@@ -90,13 +91,13 @@ class Asistente_Inteligente:
 		nuevo_estado = self.lista_avance.pop(0)
 		nuevo_estado.set_from_stock("gtk-go-forward",Gtk.IconSize.MENU)
 		self.estado_actual = nuevo_estado
-		
+
 	def on_clic_instalar(self, widget):
 		buffer_texto = self.txtRespuesta.get_buffer()
-		start = buffer_texto.get_start_iter() 
+		start = buffer_texto.get_start_iter()
 		end = buffer_texto.get_end_iter()
 		texto = buffer_texto.get_text(start,end,False)
-		if(texto != ""):	
+		if(texto != ""):
 			lista = filtrar(texto)
 			scripts_necesarios = analizar(lista)
 			if(len(scripts_necesarios) == 0):
@@ -113,7 +114,7 @@ class Asistente_Inteligente:
 			self.labelError.set_text("Por favor, responda a la pregunta o ingrese más información")
 			self.ventError.show()
 			ventana.set_sensitive(False)
-	
+
 	def on_btnAbortar_clicked(self, object, data=None):
 		ventana.set_sensitive(False)
 		if(self.vista_actual == self.ventanaInstalacion):
@@ -123,34 +124,34 @@ class Asistente_Inteligente:
 			self.mensajeConfirmacion.set_text("¿Está seguro que desea salir del asistente?")
 			self.dialogoConfirmacion.show()
 		return True
-		
+
 	def on_btnConfirmacionNo_clicked(self, object, data=None):
 		self.dialogoConfirmacion.hide()
 		ventana.set_sensitive(True)
-		
+
 	def on_btnConfirmacionSi_clicked(self, object, data=None):
 		if(self.vista_actual == self.ventanaInstalacion):
 			self.cancelarInstalacion()
 			self.dialogoConfirmacion.hide()
 		else:
 			Gtk.main_quit()
-			
-		return True		
-			
+
+		return True
+
 	def gtk_quit(self,object):
-		Gtk.main_quit()	
-		
+		Gtk.main_quit()
+
 	def instalarProgramas(self,dic_scripts):
 		#Extrae las claves de los perfiles seleccionados
 		scripts = dic_scripts.keys()
-		
+
 		#Solicita la lista con el software a instalar
 		lista = self.solicitarSoftware(scripts)
-	
+
 		#Actualizando el Sistema para evitar conflictos de versiones y disponibilidad de los paquetes de
 		#los respositorios
 		self.actualizarSistema()
-		
+
 		i = 0
 		j = 0.0
 
@@ -177,21 +178,21 @@ class Asistente_Inteligente:
 					self.proceso = subprocess.Popen(["sudo","apt-get","install","-y",lista[i]])
 					self.proceso.wait()
 					i = i+1
-			
+
 			j = j + fraccion_progreso
 			self.progreso.set_fraction(j)
-			
-		
+
+
 		#####		DESINSTALACION DE SOFTWARE SI SE ABORTA LA OPERACION		#####
-		
+
 		#en el caso de que hayan abortado la instalacion
 		#el asistente desinstalará todo el software instalado
 		if(self.cierreCiclo and i > 0):
 			self.desinstalarSoftware(lista,i)
-			
+
 		ventana.set_sensitive(True)
 		self.siguiente_vista_interno()
-		print("Programa terminado")	
+		print("Programa terminado")
 		return
 
 	def cancelarInstalacion(self):
@@ -202,21 +203,21 @@ class Asistente_Inteligente:
 		self.proceso.kill()
 		os.system("sudo pkill -9 wget")
 		os.system("sudo pkill -9 apt")
-		
+
 	def actualizarSistema(self):
 		#Actualizando repositorios del sistema
-		
+
 		self.estado.set_text("Actualizando los repositorios del sistema ... ")
 		self.proceso = subprocess.Popen(["sudo","apt-get","update"])
 		self.proceso.wait()
 		self.progreso.set_fraction(0.5)
-		
+
 		#Actualizando el sistema
 		self.estado.set_text("Actualizando el sistema. Por favor espere ... ")
 		self.proceso = subprocess.Popen(["sudo","apt-get","upgrade","-y"])
 		self.proceso.wait()
 		self.progreso.set_fraction(1.0)
-		return 
+		return
 
 	def solicitarSoftware(self,scripts):
 		flags = {"programacion_basico":False,"respaldo":False,"diseno_basico":False,"perfil_basico":False}
@@ -228,7 +229,7 @@ class Asistente_Inteligente:
 					flags["programacion_basico"] = True
 				lista = lista + diccionario_software[scr]
 				flags[scr]=True
-				
+
 			elif(scr == "ingeniero_software"):
 				listaAuxiliar = ["respaldo","diseno_basico","perfil_basico"]
 				for aux in listaAuxiliar :
@@ -238,25 +239,25 @@ class Asistente_Inteligente:
 						flags[aux] = True
 			else:
 				if(not flags[scr]):
-					print("Añadiendo "+scr) 
+					print("Añadiendo "+scr)
 					lista = lista + diccionario_software[scr]
-					
+
 		return lista
-		
+
 	def desinstalarSoftware(self,lista,i):
 		print("Se ha interrumpido la instalación, desinstalando software...")
-		
-		#Por si se estaban instalando paquetes y quedó la creme de la creme	
+
+		#Por si se estaban instalando paquetes y quedó la creme de la creme
 		self.proceso = subprocess.Popen(["sudo","pkill","-9","wget"])
 		self.proceso.wait()
-		
+
 		self.proceso = subprocess.Popen(["sudo","pkill","-9","apt"])
 		self.proceso.wait()
 		#En caso de que este programa no suelte a apt, entonces lo obligamos eliminando los locks
-		
+
 		os.system("sudo rm /var/lib/dpkg/lock")
 		os.system("sudo rm /var/cache/apt/archives/lock")
-		
+
 		#Reparando paquetes rotos o instalaciones a medias
 		os.system("sudo dpkg --configure -a")
 		os.system("sudo apt-get autoremove -y")
@@ -264,7 +265,7 @@ class Asistente_Inteligente:
 		k = 0
 		j = 1.0
 		fraccion_progreso = 1 / i
-		
+
 		while(k<i):
 			self.estado.set_text("Desinstalando "+lista[k])
 			os.system("export DEBIAN_FRONTEND=noninteractive")
@@ -274,16 +275,19 @@ class Asistente_Inteligente:
 			else:
 				self.proceso = subprocess.Popen(["sudo","apt-get", "remove","-y",lista[k]])
 				self.proceso.wait()
-				
+
 			j = j - fraccion_progreso
 			k = k+1
 			self.progreso.set_fraction(j)
-			
+
 		#Eliminando paquetes huerfanos para limpiar el sistema
 		self.proceso = subprocess.Popen(["sudo","apt-get", "autoremove","-y"])
 		self.proceso.wait()
-			
+
 #Esto sería como el main que no hice
+#Esto sirve para pasar el user name antes de ejecutar la app con gksu
+USER_NAME = sys.argv[1]
+print("Hola soy "+USER_NAME)
 constructor = Gtk.Builder()
 constructor.add_from_file("/usr/share/aiis/aiis.ui")
 constructor.connect_signals(Asistente_Inteligente())
@@ -292,4 +296,3 @@ ventana.show_all()
 #El siguiente código habilita el manejo de hilos, necesario en ubuntu 12.04 (no se necesita en ubuntu 14.04)
 GObject.threads_init()
 Gtk.main()
-
