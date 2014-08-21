@@ -1,7 +1,6 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
-
-#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 14.04
+#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 12.04
 #Scripts de instalación de software de terceros (fuera de los repositorios oficiales de Ubuntu)
     #Copyright (C) <2014>  <Sebastian Nolberto Lagos Gutierrez, slagosgutierrez@gmail.com, Arica, Chile>
 
@@ -17,8 +16,7 @@
 
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
 export DEBIAN_FRONTEND=noninteractive
-#Instalando dependencias del balsamiq mockup
-sudo apt-get purge -y adobeair balsamiqmockupsfordesktop.ede15cf69e11f7f7d45b5430c7d37cc6c3545e3c.1
-exit 
+
+sudo apt-get purge -y nodejs

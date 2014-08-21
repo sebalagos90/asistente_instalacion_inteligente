@@ -166,7 +166,7 @@ class Asistente_Inteligente:
 				if(subprocess.call('dpkg --get-selections | grep '+lista[i][1:],shell=True) == 0):
 					lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
 				else:
-					self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/"+lista[i]+".sh"])
+					self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/"+lista[i]+".sh "+USER_NAME])
 					self.proceso.wait()
 					i = i+1
 
@@ -270,7 +270,7 @@ class Asistente_Inteligente:
 			self.estado.set_text("Desinstalando "+lista[k])
 			os.system("export DEBIAN_FRONTEND=noninteractive")
 			if(re.search("_[a-z]+",lista[k])):
-				self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/des"+lista[k]+".sh"])
+				self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/des"+lista[k]+".sh "+USER_NAME])
 				self.proceso.wait()
 			else:
 				self.proceso = subprocess.Popen(["sudo","apt-get", "remove","-y",lista[k]])

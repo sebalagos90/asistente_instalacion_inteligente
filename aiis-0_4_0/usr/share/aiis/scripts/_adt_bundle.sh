@@ -18,5 +18,11 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get purge -y dropbox
+
+cd /usr/share/aiis/packages/
+wget http://dl.google.com/android/adt/adt-bundle-linux-x86-20140702.zip
+unzip adt-bundle-linux-x86-20140702.zip
+mv adt-bundle-linux-x86-20140702 /home/$1/Aplicaciones/adt-bundle-linux-x86-20140702
+rm /usr/share/aiis/packages/adt-bundle-linux-x86-20140702.zip
+chmod -R 777 /home/$1/Aplicaciones/adt-bundle-linux-x86-20140702
 exit

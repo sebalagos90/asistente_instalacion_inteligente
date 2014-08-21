@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 14.04
+#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 12.04
     #Copyright (C) <2014>  <Sebastian Nolberto Lagos Gutierrez, slagosgutierrez@gmail.com, Arica, Chile>
 
     #This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
 from unicodedata import normalize
 import re
 
@@ -38,9 +38,9 @@ def eliminarConectores(texto):
 			except:
 				break
 		i=i+1
-	
+
 	return lista
-	
+
 #Eliminacion de caracteres especiales listo
 def eliminarCaractEsp(texto):
 	print("Eliminando caracteres especiales")
@@ -73,12 +73,13 @@ def crear_diccionario():
 	soporte_remoto = ['soporte','remoto','vnc']
 	prog_java = ['java','applets','applet']
 	prog_cpp = ['c','cpp','c++']
-	prog_web = ['web']
+	prog_web = ['web','rails','ruby']
 	prog_python = ['python']
-	lista_palabras = [basico,prog_basico,comunicacion,respaldo,disenador,ing_software,redes,soporte_remoto,prog_java,prog_cpp,prog_web,prog_python]
-	
+  prog_android = ['android','movil','moviles']
+	lista_palabras = [basico,prog_basico,comunicacion,respaldo,disenador,ing_software,redes,soporte_remoto,prog_java,prog_cpp,prog_web,prog_python, prog_android]
+
 	perfiles = ['perfil_basico','programacion_basico','comunicacion_basico','respaldo','diseno_basico','ingeniero_software','redes','soporte_remoto','programacion_java','programacion_cpp','programacion_web','programacion_python']
-	
+
 	i = 0
 	j = 0
 	diccionario_palabras = {}
@@ -105,6 +106,5 @@ def analizar(lista):
 		#else:
 		#	print("La palabra: ",lista[i]," no está en el diccionario")
 		i = i+1
-		
-	return diccionario_perfiles
 
+	return diccionario_perfiles

@@ -1,6 +1,6 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
-#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 14.04
+#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 12.04
 #Scripts de instalación de software de terceros (fuera de los repositorios oficiales de Ubuntu)
     #Copyright (C) <2014>  <Sebastian Nolberto Lagos Gutierrez, slagosgutierrez@gmail.com, Arica, Chile>
 
@@ -24,4 +24,4 @@ sudo apt-get install -y libqt4-dbus libqt4-network libqt4-webkit libqt4-xml libq
 cd /usr/share/aiis/packages
 test ! -f /usr/share/aiis/packages/skype-ubuntu-precise_4.3.0.37-1_i386.deb && wget http://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb
 sudo dpkg -i /usr/share/aiis/packages/skype-ubuntu-precise_4.3.0.37-1_i386.deb
-exit 
+exit

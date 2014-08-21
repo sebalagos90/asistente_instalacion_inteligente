@@ -1,6 +1,6 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
-#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 14.04
+#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 12.04
 #Scripts de instalación de software de terceros (fuera de los repositorios oficiales de Ubuntu)
     #Copyright (C) <2014>  <Sebastian Nolberto Lagos Gutierrez, slagosgutierrez@gmail.com, Arica, Chile>
 
@@ -20,5 +20,5 @@
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
 test ! -f /usr/share/aiis/packages/dropbox_1.6.0_i386.deb && wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_1.6.0_i386.deb
-sudo dpkg -i /usr/share/aiis/packages/dropbox_1.6.0_i386.deb 
-exit 
+sudo dpkg -i /usr/share/aiis/packages/dropbox_1.6.0_i386.deb
+exit

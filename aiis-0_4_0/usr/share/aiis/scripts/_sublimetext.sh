@@ -18,5 +18,9 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get purge -y dropbox
-exit
+cd /usr/share/aiis/packages
+wget http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%202.0.2.tar.bz2
+tar jvxf Sublime\ Text\ 2.0.2.tar.bz2
+mv Sublime\ Text\ 2.0.2 /home/$1/Aplicaciones/SublimeText
+chmod -R 777 /home/$1/Aplicaciones/SublimeText
+rm Sublime\ Text\ 2.0.2.tar.bz2

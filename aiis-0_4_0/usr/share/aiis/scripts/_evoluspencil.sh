@@ -1,5 +1,6 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
+
 #Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 12.04
 #Scripts de instalación de software de terceros (fuera de los repositorios oficiales de Ubuntu)
     #Copyright (C) <2014>  <Sebastian Nolberto Lagos Gutierrez, slagosgutierrez@gmail.com, Arica, Chile>
@@ -18,5 +19,10 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get purge -y dropbox
+
+cd /usr/share/aiis/packages
+#dependencias Firefox??? que!!!!
+sudo apt-get install -y firefox firefox-locale-es
+test ! -f /usr/share/aiis/packages/evoluspencil_2.0.5_all.deb && wget https://evoluspencil.googlecode.com/files/evoluspencil_2.0.5_all.deb
+sudo dpkg -i /usr/share/aiis/packages/evoluspencil_2.0.5_all.deb
 exit

@@ -1,6 +1,6 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
-#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 14.04
+#Asistente de Instalación Inteligente de Software para distribuciones GNU/Linux basados en Ubuntu 12.04
 #Scripts de instalación de software de terceros (fuera de los repositorios oficiales de Ubuntu)
     #Copyright (C) <2014>  <Sebastian Nolberto Lagos Gutierrez, slagosgutierrez@gmail.com, Arica, Chile>
 
@@ -19,17 +19,13 @@
 
 #Conocimientos extraidos de
 #Etel Sverdlov
-#https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-on-ubuntu-12-04-lts-precise-pangolin-with-rvm
+#https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-on-ubuntu-12-04-from-source
 
 export DEBIAN_FRONTEND=noninteractive
-#Instalando dependencias de Ruby on Rails
-sudo apt-get install curl
 
-#OJO se debe hacer como usuario normal
-\curl -L https://get.rvm.io | bash -s stable
-source ~/.rvm/scripts/rvm
-rvm requirements
-rvm install ruby
-rvm use ruby --default
-rvm rubygems current
-gem install rails
+\curl -sSL https://get.rvm.io | bash -s stable
+source /etc/profile.d/rvm.sh
+#Añadiendo el usuario al grupo rvm
+adduser $1 rvm
+
+exit
