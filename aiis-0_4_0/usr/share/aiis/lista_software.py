@@ -29,7 +29,7 @@ perfil_prog_web = ["lamp-server^", "phpmyadmin","_ruby_rvm","_nodejs"]
 perfil_prog_android= ["openjdk-7-jdk", "_adt_bundle"]
 perfil_comunicacion_basico = ["_skype"]
 perfil_diseno_basico = ["dia", "mysql-workbench", "_argouml","_datamodeler", "_evoluspencil", "gimp"]
-perfil_redes_basico = ["_wireshark"]
+perfil_redes_basico = ["_wireshark","speedometer"]
 perfil_respaldo_basico = ["_dropbox", "git", "subversion" ,"_smartgithg"]
 perfil_soporte_remoto_basico = ["vino", "vinagre","_teamviewer"]
 
