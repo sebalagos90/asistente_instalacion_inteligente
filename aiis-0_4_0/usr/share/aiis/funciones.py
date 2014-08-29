@@ -75,10 +75,10 @@ def crear_diccionario():
 	prog_cpp = ['c','cpp','c++']
 	prog_web = ['web','rails','ruby']
 	prog_python = ['python']
-  prog_android = ['android','movil','moviles']
+	prog_android = ['android','movil','moviles']
 	lista_palabras = [basico,prog_basico,comunicacion,respaldo,disenador,ing_software,redes,soporte_remoto,prog_java,prog_cpp,prog_web,prog_python, prog_android]
 
-	perfiles = ['perfil_basico','programacion_basico','comunicacion_basico','respaldo','diseno_basico','ingeniero_software','redes','soporte_remoto','programacion_java','programacion_cpp','programacion_web','programacion_python']
+	perfiles = ['perfil_basico','programacion_basico','comunicacion_basico','respaldo','diseno_basico','ingeniero_software','redes','soporte_remoto','programacion_java','programacion_cpp','programacion_web','programacion_python','programacion_android']
 
 	i = 0
 	j = 0
