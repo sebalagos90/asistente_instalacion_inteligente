@@ -20,10 +20,10 @@
 #OJO de No agregar python a la lista de instalables, debido a que ya se encuentra instalado
 #programas que contiene cada perfil
 perfil_basico = ["openjdk-7-jre", "icedtea-7-plugin", "unrar", "p7zip-full", "ubuntu-restricted-extras", "libreoffice", "libreoffice-l10n-es",
-"firefox", "firefox-locale-es","thunderbird","thunderbird-locale-es" "vlc"]
+"--Navegadores","thunderbird","thunderbird-locale-es" "vlc"]
 perfil_prog_basico = ["_sublimetext"]
-perfil_prog_cpp = ["g++", "codeblocks", "qtcreator"]
-perfil_prog_java = ["openjdk-7-jdk", "netbeans"]
+perfil_prog_cpp = ["g++", "--IDEs C++"]
+perfil_prog_java = ["openjdk-7-jdk", "--IDEs Java"]
 perfil_prog_python = ["glade"]
 perfil_prog_web = ["lamp-server^", "phpmyadmin","_ruby_rvm","_nodejs"]
 perfil_prog_android= ["openjdk-7-jdk", "_adt_bundle"]
@@ -38,3 +38,11 @@ diccionario_software = {'perfil_basico':perfil_basico,'programacion_basico':perf
 'comunicacion_basico':perfil_comunicacion_basico,'respaldo':perfil_respaldo_basico,'diseno_basico':perfil_diseno_basico,
 'redes':perfil_redes_basico,'soporte_remoto':perfil_soporte_remoto_basico,'programacion_java':perfil_prog_java,
 'programacion_cpp':perfil_prog_cpp,'programacion_android':perfil_prog_android, 'programacion_web':perfil_prog_web,'programacion_python':perfil_prog_python}
+
+navegadores = ['firefox','chromium-browser']
+prog_cpp = ['codeblocks', 'qtcreator']
+prog_java = ['netbeans','eclipse']
+
+diccionario_pref_soft = {'Navegadores':navegadores,'IDEs C++':prog_cpp,'IDEs Java':prog_java}
+
+

@@ -18,7 +18,7 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from gi.repository import Gtk, GObject
+from gi.repository import Gtk, GdkPixbuf, GObject
 import time
 import os
 import threading
@@ -28,7 +28,6 @@ from lista_software import diccionario_software
 import subprocess
 import sys
 
-
 class Asistente_Inteligente:
 
 	def __init__(self):
@@ -37,22 +36,26 @@ class Asistente_Inteligente:
 		self.vista_actual = constructor.get_object("boxPrincipal")
 		vent1 = constructor.get_object("boxTerminos")
 		vent2 = constructor.get_object("boxPregunta")
-		vent3 = constructor.get_object("boxInstalacion")
-		vent4 = constructor.get_object("boxFinalizar")
-		self.ventanaInstalacion = vent3
-		self.ventanaFinalizar = vent4
+		vent3 = constructor.get_object("boxPreguntaPref")
+		vent4 = constructor.get_object("boxInstalacion")
+		vent5 = constructor.get_object("boxFinalizar")
+		
+		self.ventanaPregunaPref = vent3
+		self.ventanaInstalacion = vent4
+		self.ventanaFinalizar = vent5
+		
 		img1 = constructor.get_object("imgBienvenida")
 		img2 = constructor.get_object("imgTerminos")
 		img3 = constructor.get_object("imgUso")
-		#img4 = constructor.get_object("imgProgramas") si implemento que muestre la lista de programas a instalar
+		img4 = constructor.get_object("imgProgramas") 
 		img5 = constructor.get_object("imgInstalacion")
 		img6 = constructor.get_object("imgFinalizar")
 
 		#Lista de las vistas de la interfaz
-		self.lista_vistas = [vent1,vent2,vent3,vent4]
+		self.lista_vistas = [vent1,vent2,vent3,vent4,vent5]
 
 		#Lista de las imagenes del estado de avance de la interfaz
-		self.lista_avance = [img2,img3,img5,img6]
+		self.lista_avance = [img2,img3,img4,img5,img6]
 
 		self.estado_actual = img1
 		self.txtRespuesta = constructor.get_object("txtRespuesta")
@@ -66,6 +69,19 @@ class Asistente_Inteligente:
 		self.mensajeConfirmacion = constructor.get_object("labelConfirmacion")
 		self.mensajeInstalacion = constructor.get_object("mensajeInstalacion")
 		self.estado = constructor.get_object("estadoInstalacion")
+		
+		#Definiendo los componentes de la vista de preguntas
+		self.listStore = constructor.get_object("listaSoftware")
+		self.vistaArbol = constructor.get_object("vistaArbol")
+		self.posActualListaPref = 0
+		
+	
+	def actualizarListaPreguntas(self):
+		pos = self.posActualListaPref
+		listaPrefAux = diccionario_pref_soft[pos]
+		pos = pos +1 
+		self.posActualListaPref = pos
+		
 
 	def ocultarError(self, object, data=None):
 		ventana.set_sensitive(True)
@@ -74,6 +90,9 @@ class Asistente_Inteligente:
 	def siguiente_vista_interno(self):
 		print("Cambiando interfaz a la siguiente")
 		vista_siguiente = self.lista_vistas.pop(0)
+		
+		if(vista_siguiente == self.ventanaPregunaPref):
+			self.cargarDatos()
 		self.cajaPrincipal.remove(self.vista_actual)
 		self.cajaPrincipal.pack_end(vista_siguiente,True,True,5)
 		self.vista_actual = vista_siguiente
@@ -108,8 +127,8 @@ class Asistente_Inteligente:
 				hilo_interfaz = threading.Thread(target=self.siguiente_vista_interno)
 				hilo_interfaz.start()
 				hilo_interfaz.join()
-				hilo_ejecutar = threading.Thread(target=self.instalarProgramas,args=(scripts_necesarios,))
-				hilo_ejecutar.start()
+				#~ hilo_ejecutar = threading.Thread(target=self.instalarProgramas,args=(scripts_necesarios,))
+				#~ hilo_ejecutar.start()
 		else:
 			self.labelError.set_text("Por favor, responda a la pregunta o ingrese más información")
 			self.ventError.show()
@@ -141,6 +160,57 @@ class Asistente_Inteligente:
 	def gtk_quit(self,object):
 		Gtk.main_quit()
 
+	def cargarDatos(self):
+		
+		img = GdkPixbuf.Pixbuf.new_from_file_at_size('/usr/share/aiis/iconos/firefox.png',45,45)
+		
+		self.listStore.append([True, img , "Firefox" ])
+		#~ self.listStore.append([False, Gtk.STOCK_NEW, "Chrome"])
+		#~ self.listStore.append([False, Gtk.STOCK_NEW, "Opera"])
+		#~ self.listStore.append([False, Gtk.STOCK_NEW, "Todos"])
+		
+		render_toggle = Gtk.CellRendererToggle()
+		#~ #Se conecta con el evento a implementar "on_cell_toggled" y se gatilla cuando se presiona sobre el checkbox
+		render_toggle.connect("toggled", self.on_cell_toggled)
+		
+		#Se crea la columna de checkboxes o toggles
+		columna_toggle = Gtk.TreeViewColumn("Seleccion", render_toggle, active=0) #El numero indica la posicion del elemento
+		#en este caso es la primera posicion
+		
+		#Se añade la columna al arbol o vista o treeView
+		self.vistaArbol.append_column(columna_toggle)
+		
+		#Armando la columna con imagenes
+		render_imagenes = Gtk.CellRendererPixbuf()
+		columna_imagen = Gtk.TreeViewColumn("Icono", render_imagenes, pixbuf=1)
+		self.vistaArbol.append_column(columna_imagen)
+		
+		#Armando la columna de nombre del software
+		nombre_programas = Gtk.CellRendererText()
+		columna_programas = Gtk.TreeViewColumn("Programa", nombre_programas, text=2) #Segunda posicion en la interfaz
+		
+		#Agregando la columna al arbol
+		self.vistaArbol.append_column(columna_programas)
+		return True
+	
+	def on_cell_toggled(self,widget,path):
+		CANT_ELEMENTOS = 4 #debe ser calculado
+		i=0
+		print(path)
+		#El numero 3 debe reemplazarse por la cantidad de elementos de la lista menos 1
+		if(path==str(CANT_ELEMENTOS-1)):
+			if(not self.listStore[path][0]):
+				while(i<int(path)):
+					print(self.listStore[i][0])
+					self.listStore[i][0] = False
+					i=i+1
+			self.listStore[path][0] = not self.listStore[path][0]
+			
+		else:
+			self.listStore[CANT_ELEMENTOS-1][0] = False
+			self.listStore[path][0]= not self.listStore[path][0]
+		#~ self.listStore[path][0]= not self.listStore[path][0]
+	
 	def instalarProgramas(self,dic_scripts):
 		#Extrae las claves de los perfiles seleccionados
 		scripts = dic_scripts.keys()
@@ -148,50 +218,54 @@ class Asistente_Inteligente:
 		#Solicita la lista con el software a instalar
 		lista = self.solicitarSoftware(scripts)
 
+		self.cargarDatos()
+		
 		#Actualizando el Sistema para evitar conflictos de versiones y disponibilidad de los paquetes de
 		#los respositorios
-		self.actualizarSistema()
-
-		i = 0
-		j = 0.0
-
-		#####		INSTALACION DEL SOFTWARE SELECCIONADO      #######
-		fraccion_progreso = 1 / len(lista)
-		self.progreso.set_fraction(0.0)
-		while(i<len(lista) and not self.cierreCiclo):
-			self.estado.set_text("Instalando "+lista[i])
-			os.system("export DEBIAN_FRONTEND=noninteractive")
-			if(re.search("_[a-z]+",lista[i]) and not self.cierreCiclo):
-				#verificando si el paquete está instalado para omitirlo y no desinstalarlo en caso de abortar la instalacion
-				if(subprocess.call('dpkg --get-selections | grep '+lista[i][1:],shell=True) == 0):
-					lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
-				else:
-					self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/"+lista[i]+".sh "+USER_NAME])
-					self.proceso.wait()
-					i = i+1
-
-			elif(not self.cierreCiclo):
-				#verificando si el paquete está instalado para omitirlo y no desinstalarlo en caso de abortar la instalacion
-				if(subprocess.call('dpkg --get-selections | grep '+lista[i],shell=True) == 0):
-					lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
-				else:
-					self.proceso = subprocess.Popen(["sudo","apt-get","install","-y",lista[i]])
-					self.proceso.wait()
-					i = i+1
-
-			j = j + fraccion_progreso
-			self.progreso.set_fraction(j)
-
-
-		#####		DESINSTALACION DE SOFTWARE SI SE ABORTA LA OPERACION		#####
-
-		#en el caso de que hayan abortado la instalacion
-		#el asistente desinstalará todo el software instalado
-		if(self.cierreCiclo and i > 0):
-			self.desinstalarSoftware(lista,i)
-
-		ventana.set_sensitive(True)
-		self.siguiente_vista_interno()
+		
+		#~ 
+		#~ self.actualizarSistema()
+		#~ 
+		#~ i = 0
+		#~ j = 0.0
+#~ 
+		#~ #####		INSTALACION DEL SOFTWARE SELECCIONADO      #######
+		#~ fraccion_progreso = 1 / len(lista)
+		#~ self.progreso.set_fraction(0.0)
+		#~ while(i<len(lista) and not self.cierreCiclo):
+			#~ self.estado.set_text("Instalando "+lista[i])
+			#~ os.system("export DEBIAN_FRONTEND=noninteractive")
+			#~ if(re.search("_[a-z]+",lista[i]) and not self.cierreCiclo):
+				#~ #verificando si el paquete está instalado para omitirlo y no desinstalarlo en caso de abortar la instalacion
+				#~ if(subprocess.call('dpkg --get-selections | grep '+lista[i][1:],shell=True) == 0):
+					#~ lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
+				#~ else:
+					#~ self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/"+lista[i]+".sh "+USER_NAME])
+					#~ self.proceso.wait()
+					#~ i = i+1
+#~ 
+			#~ elif(not self.cierreCiclo):
+				#~ #verificando si el paquete está instalado para omitirlo y no desinstalarlo en caso de abortar la instalacion
+				#~ if(subprocess.call('dpkg --get-selections | grep '+lista[i],shell=True) == 0):
+					#~ lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
+				#~ else:
+					#~ self.proceso = subprocess.Popen(["sudo","apt-get","install","-y",lista[i]])
+					#~ self.proceso.wait()
+					#~ i = i+1
+#~ 
+			#~ j = j + fraccion_progreso
+			#~ self.progreso.set_fraction(j)
+#~ 
+#~ 
+		#~ #####		DESINSTALACION DE SOFTWARE SI SE ABORTA LA OPERACION		#####
+#~ 
+		#~ #en el caso de que hayan abortado la instalacion
+		#~ #el asistente desinstalará todo el software instalado
+		#~ if(self.cierreCiclo and i > 0):
+			#~ self.desinstalarSoftware(lista,i)
+#~ 
+		#~ ventana.set_sensitive(True)
+		#~ self.siguiente_vista_interno()
 		print("Programa terminado")
 		return
 
