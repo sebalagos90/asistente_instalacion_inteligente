@@ -20,10 +20,10 @@
 #OJO de No agregar python a la lista de instalables, debido a que ya se encuentra instalado
 #programas que contiene cada perfil
 perfil_basico = ["openjdk-7-jre", "icedtea-7-plugin", "unrar", "p7zip-full", "ubuntu-restricted-extras", "libreoffice", "libreoffice-l10n-es",
-"--Navegadores","thunderbird","thunderbird-locale-es" "vlc"]
+"_preg_Navegadores","thunderbird","thunderbird-locale-es" "vlc"]
 perfil_prog_basico = ["_sublimetext"]
-perfil_prog_cpp = ["g++", "--IDEs C++"]
-perfil_prog_java = ["openjdk-7-jdk", "--IDEs Java"]
+perfil_prog_cpp = ["g++", "_preg_IDEs C++"]
+perfil_prog_java = ["openjdk-7-jdk", "_preg_IDEs Java"]
 perfil_prog_python = ["glade"]
 perfil_prog_web = ["lamp-server^", "phpmyadmin","_ruby_rvm","_nodejs"]
 perfil_prog_android= ["openjdk-7-jdk", "_adt_bundle"]

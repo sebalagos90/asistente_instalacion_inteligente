@@ -433,6 +433,7 @@ Disfrute su Sistema con el Software que necesita.</property>
         <property name="receives_default">True</property>
         <property name="halign">end</property>
         <property name="valign">end</property>
+        <signal name="clicked" handler="siguiente_pregunta" swapped="no"/>
       </object>
       <packing>
         <property name="expand">False</property>
