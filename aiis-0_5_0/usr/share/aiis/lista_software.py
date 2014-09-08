@@ -20,8 +20,8 @@
 #OJO de No agregar python a la lista de instalables, debido a que ya se encuentra instalado
 #programas que contiene cada perfil
 perfil_basico = ["openjdk-7-jre", "icedtea-7-plugin", "unrar", "p7zip-full", "ubuntu-restricted-extras", "libreoffice", "libreoffice-l10n-es",
-"_preg_Navegadores","thunderbird","thunderbird-locale-es" "vlc"]
-perfil_prog_basico = ["_sublimetext"]
+"_preg_Navegadores","thunderbird","thunderbird-locale-es","vlc"]
+perfil_prog_basico = ['_preg_Editor Texto']
 perfil_prog_cpp = ["g++", "_preg_IDEs C++"]
 perfil_prog_java = ["openjdk-7-jdk", "_preg_IDEs Java"]
 perfil_prog_python = ["glade"]
@@ -42,7 +42,8 @@ diccionario_software = {'perfil_basico':perfil_basico,'programacion_basico':perf
 navegadores = ['firefox','chromium-browser']
 prog_cpp = ['codeblocks', 'qtcreator']
 prog_java = ['netbeans','eclipse']
+prog_normal = ['_sublimetext','geany']
 
-diccionario_pref_soft = {'Navegadores':navegadores,'IDEs C++':prog_cpp,'IDEs Java':prog_java}
+diccionario_pref_soft = {'Navegadores':navegadores,'IDEs C++':prog_cpp,'IDEs Java':prog_java, 'Editor Texto':prog_normal}
 
 
