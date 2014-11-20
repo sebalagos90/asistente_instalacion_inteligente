@@ -68,7 +68,7 @@ def crear_diccionario():
 	comunicacion = ['comunicacion','comunicarme','conferencias','conferencia']
 	respaldo = ['respaldar','almacenamiento','versionado','respaldo']
 	disenador = ['diseno', 'disenos','disenado','modelado','modelos','modelar','disenar']
-	ing_software = ['ingenieria','desarrollo','desarrollar']
+	ing_software = ['ingenieria','desarrollo','desarrollar','desarrollando']
 	redes = ['redes','trafico','red']
 	soporte_remoto = ['soporte','remoto','vnc']
 	prog_java = ['java','applets','applet']

@@ -74,6 +74,7 @@ class Asistente_Inteligente:
 		self.listStore = constructor.get_object("listaSoftware")
 		self.vistaArbol = constructor.get_object("vistaArbol")
 		self.listaPreguntas = []
+		self.listaSoftwareInstalar = []
 				
 	def ocultarError(self, object, data=None):
 		ventana.set_sensitive(True)
@@ -347,7 +348,10 @@ class Asistente_Inteligente:
 		return
 
 	def solicitarSoftware(self,scripts):
-		flags = {"programacion_basico":False,"respaldo":False,"diseno_basico":False,"perfil_basico":False}
+		flags = {'perfil_basico':False,'programacion_basico':False,'comunicacion_basico':False,'respaldo':False,
+		'diseno_basico':False,'ingeniero_software':False,'redes':False,'soporte_remoto':False,'programacion_java':False,
+		'programacion_cpp':False,'programacion_web':False,'programacion_python':False,'programacion_android':False}
+		#flags = {"programacion_basico":False,"respaldo":False,"diseno_basico":False,"perfil_basico":False}
 		lista = []
 		for scr in scripts :
 			if(re.search("programacion_[a-z]+",scr) and scr != "programacion_basico"):
