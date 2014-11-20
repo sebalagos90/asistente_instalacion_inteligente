@@ -263,7 +263,7 @@ class Asistente_Inteligente:
 		#~ #Actualizando el Sistema para evitar conflictos de versiones y disponibilidad de los paquetes de
 		#~ #los respositorios
 		#~ 
-		
+		os.system("mkdir /usr/share/aiis/packages")
 		self.actualizarSistema()
 		lista = self.listaSoftwareInstalar
 		i = 0
