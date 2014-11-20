@@ -20,6 +20,7 @@
 
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
+sudo apt-get install openjdk-7-jre -y
 test ! -f /usr/share/aiis/packages/argouml_0.34-1.deb && wget https://www.dropbox.com/s/65b9lpdjr5etvz9/argouml_0.34-1.deb
 sudo dpkg -i /usr/share/aiis/packages/argouml_0.34-1.deb
 exit

@@ -19,6 +19,7 @@
 
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
+sudo apt-get install openjdk-7-jre git -y
 test ! -f /usr/share/aiis/packages/smartgit-6_5_1.deb && wget http://www.syntevo.com/download/smartgit/smartgit-6_5_1.deb
 sudo dpkg -i /usr/share/aiis/packages/smartgit-6_5_1.deb
 exit
