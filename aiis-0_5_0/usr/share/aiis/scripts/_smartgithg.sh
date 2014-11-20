@@ -19,6 +19,6 @@
 
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
-test ! -f /usr/share/aiis/packages/smartgithg-6_0_4.deb && wget http://www.syntevo.com/download/smartgithg/smartgithg-6_0_4.deb
-sudo dpkg -i /usr/share/aiis/packages/smartgithg-6_0_4.deb
+test ! -f /usr/share/aiis/packages/smartgit-6_5_1.deb && wget http://www.syntevo.com/download/smartgit/smartgit-6_5_1.deb
+sudo dpkg -i /usr/share/aiis/packages/smartgit-6_5_1.deb
 exit
