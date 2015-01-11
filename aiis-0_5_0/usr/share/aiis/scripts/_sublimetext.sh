@@ -19,18 +19,7 @@
 
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
-sudo wget http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%202.0.2.tar.bz2
-if [ $? != 0 ]
-then 
-	echo "Error en la descarga de sublimetext, reintentando"
-	sudo rm /usr/share/aiis/packages/Sublime\ Text\ 2.0.2.tar.bz2
-	cd /usr/share/aiis/packages/
-	sudo wget http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%202.0.2.tar.bz2
-	if [ $? != 0 ]
-	then 
-		exit 100
-	fi
-fi
+wget http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%202.0.2.tar.bz2
 mkdir /home/$1/Aplicaciones
 tar jvxf Sublime\ Text\ 2.0.2.tar.bz2 -C /home/$1/Aplicaciones
 chmod -R 777 /home/$1/Aplicaciones/SublimeText

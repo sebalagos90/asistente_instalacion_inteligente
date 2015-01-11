@@ -21,14 +21,4 @@
 export DEBIAN_FRONTEND=noninteractive
 /bin/sh -c 'echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections'
 sudo apt-get install -qq ttf-mscorefonts-installer && sudo apt-get install -qq ubuntu-restricted-addons && sudo apt-get install -qq gstreamer0.10-plugins-bad-multiverse && sudo apt-get install -qq libavcodec-extra-53 && sudo apt-get install -qq unrar 
-if [ $? != 0 ] 
-then 
-	echo "Error en la instalacion de ubuntu-restricted-extras, Intentando reinstalar"
-	sudo apt-get install -qq ttf-mscorefonts-installer && sudo apt-get install -qq ubuntu-restricted-addons && sudo apt-get install -qq gstreamer0.10-plugins-bad-multiverse && sudo apt-get install -qq libavcodec-extra-53 && sudo apt-get install -qq unrar 
-	if [ $? != 0 ]
-	then 
-		exit 100
-	fi
-fi
-adduser $1 wireshark
-exit 0
+exit

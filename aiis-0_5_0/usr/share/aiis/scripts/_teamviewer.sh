@@ -19,19 +19,6 @@
 
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
-sudo wget http://download.teamviewer.com/download/teamviewer_linux.deb
-if [ $? != 0 ] 
-then 
-	echo "Error en la descarga de teamviewer, reintentando"
-	sudo rm /usr/share/aiis/packages/teamviewer_linux.deb
-	cd /usr/share/aiis/packages/
-	sudo wget http://download.teamviewer.com/download/teamviewer_linux.deb
-	if [ $? != 0 ]
-	then 
-		exit 100
-	fi
-fi
-
+wget http://download.teamviewer.com/download/teamviewer_linux.deb
 sudo dpkg -i /usr/share/aiis/packages/teamviewer_linux.deb
-
-exit 0
+exit

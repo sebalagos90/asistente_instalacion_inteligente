@@ -17,16 +17,6 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export DEBIAN_FRONTEND=noninteractive
 sudo apt-get install -qq wireshark
-if [ $? != 0 ]
-then 
-	echo "Error en la instalacion de wireshark, Intentando reinstalar"
-	sudo apt-get install -qq wireshark
-	if [ $? != 0 ]
-	then 
-		exit 100
-	fi
-fi
 adduser $1 wireshark
-exit 0
+exit

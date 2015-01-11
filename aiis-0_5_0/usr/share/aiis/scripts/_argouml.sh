@@ -20,14 +20,7 @@
 
 
 cd /usr/share/aiis/packages
-sudo wget https://www.dropbox.com/s/65b9lpdjr5etvz9/argouml_0.34-1.deb
-valor=16407542
-descarga=$(stat -c %s /usr/share/aiis/packages/argouml_0.34-1.deb)
-if [ "$descarga" == "$valor" ]
-then
-	sudo dpkg -i /usr/share/aiis/packages/argouml_0.34-1.deb
-	exit 0
-else
-	exit 100
-fi
+wget https://www.dropbox.com/s/65b9lpdjr5etvz9/argouml_0.34-1.deb
+sudo dpkg -i /usr/share/aiis/packages/argouml_0.34-1.deb
+exit
 

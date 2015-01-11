@@ -19,4 +19,4 @@
 
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get purge -qq smartgithg
-exit 0
+exit 

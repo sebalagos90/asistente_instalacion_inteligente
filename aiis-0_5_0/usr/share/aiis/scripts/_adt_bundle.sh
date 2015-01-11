@@ -20,7 +20,7 @@
 export DEBIAN_FRONTEND=noninteractive
 
 cd /usr/share/aiis/packages/
-sudo wget http://dl.google.com/android/adt/adt-bundle-linux-x86-20140702.zip
+wget http://dl.google.com/android/adt/adt-bundle-linux-x86-20140702.zip
 mkdir /home/$1/Aplicaciones
 unzip adt-bundle-linux-x86-20140702.zip -d /home/$1/Aplicaciones
 rm /usr/share/aiis/packages/adt-bundle-linux-x86-20140702.zip

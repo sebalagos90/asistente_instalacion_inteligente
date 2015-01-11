@@ -19,5 +19,5 @@
 
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get purge -qq teamviewer9
-exit 0
+exit 
  

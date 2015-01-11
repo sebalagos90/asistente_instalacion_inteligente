@@ -20,4 +20,4 @@
 export DEBIAN_FRONTEND=noninteractive
 
 sudo apt-get purge -qq nodejs
-exit 0
+exit 

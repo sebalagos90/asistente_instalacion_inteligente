@@ -20,4 +20,4 @@
 
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get purge -qq argouml
-exit 0
+exit 

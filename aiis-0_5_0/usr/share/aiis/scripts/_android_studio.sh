@@ -19,7 +19,7 @@
 
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
-sudo wget https://dl.google.com/dl/android/studio/ide-zips/1.0.1/android-studio-ide-135.1641136-linux.zip
+wget https://dl.google.com/dl/android/studio/ide-zips/1.0.1/android-studio-ide-135.1641136-linux.zip
 mkdir /home/$1/Aplicaciones
 unzip android-studio-ide-135.1641136-linux.zip -d /home/$1/Aplicaciones
 chmod -R 777 /home/$1/Aplicaciones/android-studio

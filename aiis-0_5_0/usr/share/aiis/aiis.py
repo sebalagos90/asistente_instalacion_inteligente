@@ -372,6 +372,7 @@ class Asistente_Inteligente:
 				if(not flags[scr]):
 					print("Añadiendo "+scr)
 					lista = lista + diccionario_software[scr]
+					flags[scr]=True
 
 		return lista
 
