@@ -19,31 +19,34 @@
 
 #OJO de No agregar python a la lista de instalables, debido a que ya se encuentra instalado
 #programas que contiene cada perfil
-perfil_basico = ["openjdk-7-jre", "icedtea-7-plugin", "unrar", "p7zip-full", "ubuntu-restricted-extras", "libreoffice", "libreoffice-l10n-es",
-"_preg_Navegadores","thunderbird","thunderbird-locale-es","vlc"]
+perfil_basico = ["openjdk-7-jre", "icedtea-7-plugin", "unrar", "p7zip-full", "_ubuntu-restricted-extras", "libreoffice", 
+"libreoffice-l10n-es", "_preg_Navegadores","thunderbird","thunderbird-locale-es","vlc"]
 perfil_prog_basico = ['_preg_Editor Texto']
 perfil_prog_cpp = ["g++", "_preg_IDEs C++"]
-perfil_prog_java = ["openjdk-7-jdk", "_preg_IDEs Java"]
+perfil_prog_java = ["openjdk-7-jdk", "openjdk-7-jre", "_preg_IDEs Java"]
 perfil_prog_python = ["glade"]
 perfil_prog_web = ["lamp-server^", "phpmyadmin","_ruby_rvm","_nodejs"]
-perfil_prog_android= ["openjdk-7-jdk", "_adt_bundle"]
+perfil_prog_android= ["openjdk-7-jdk", '_preg_IDEs Android']
 perfil_comunicacion_basico = ["_skype"]
-perfil_diseno_basico = ["dia", "mysql-workbench", "_argouml","_datamodeler", "_evoluspencil", "gimp"]
+perfil_diseno_basico = ["openjdk-7-jdk", "openjdk-7-jre", "dia", "mysql-workbench", "_argouml", "_datamodeler", "_evoluspencil", "gimp"]
 perfil_redes_basico = ["_wireshark","speedometer"]
-perfil_respaldo_basico = ["_dropbox", "git", "subversion" ,"_smartgithg"]
+perfil_respaldo_basico = ["openjdk-7-jdk", "openjdk-7-jre", "_dropbox", "git", "subversion" ,"_smartgithg"]
 perfil_soporte_remoto_basico = ["vino", "vinagre","_teamviewer"]
 
 #diccionario que relaciona el perfil con la lista de software
 diccionario_software = {'perfil_basico':perfil_basico,'programacion_basico':perfil_prog_basico,
 'comunicacion_basico':perfil_comunicacion_basico,'respaldo':perfil_respaldo_basico,'diseno_basico':perfil_diseno_basico,
 'redes':perfil_redes_basico,'soporte_remoto':perfil_soporte_remoto_basico,'programacion_java':perfil_prog_java,
-'programacion_cpp':perfil_prog_cpp,'programacion_android':perfil_prog_android, 'programacion_web':perfil_prog_web,'programacion_python':perfil_prog_python}
+'programacion_cpp':perfil_prog_cpp,'programacion_android':perfil_prog_android, 'programacion_web':perfil_prog_web,
+'programacion_python':perfil_prog_python}
 
 navegadores = ['firefox','chromium-browser']
 prog_cpp = ['codeblocks', 'qtcreator']
 prog_java = ['netbeans','eclipse']
 prog_normal = ['_sublimetext','geany']
+prog_android = ['_adt_bundle','_android_studio']
 
-diccionario_pref_soft = {'Navegadores':navegadores,'IDEs C++':prog_cpp,'IDEs Java':prog_java, 'Editor Texto':prog_normal}
+diccionario_pref_soft = {'Navegadores':navegadores,'IDEs C++':prog_cpp,'IDEs Java':prog_java, 'Editor Texto':prog_normal,
+'IDEs Android':prog_android}
 
 

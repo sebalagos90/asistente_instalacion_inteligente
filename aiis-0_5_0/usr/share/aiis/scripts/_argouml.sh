@@ -18,9 +18,16 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export DEBIAN_FRONTEND=noninteractive
+
 cd /usr/share/aiis/packages
-sudo apt-get install openjdk-7-jre -y
-test ! -f /usr/share/aiis/packages/argouml_0.34-1.deb && wget https://www.dropbox.com/s/65b9lpdjr5etvz9/argouml_0.34-1.deb
-sudo dpkg -i /usr/share/aiis/packages/argouml_0.34-1.deb
-exit
+sudo wget https://www.dropbox.com/s/65b9lpdjr5etvz9/argouml_0.34-1.deb
+valor=16407542
+descarga=$(stat -c %s /usr/share/aiis/packages/argouml_0.34-1.deb)
+if [ "$descarga" == "$valor" ]
+then
+	sudo dpkg -i /usr/share/aiis/packages/argouml_0.34-1.deb
+	exit 0
+else
+	exit 100
+fi
+

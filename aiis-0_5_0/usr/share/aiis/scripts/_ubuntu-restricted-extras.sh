@@ -16,22 +16,19 @@
 
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #Solución extraída de http://devrijepc.nl/install/ubuntu-postinstall
 
 export DEBIAN_FRONTEND=noninteractive
-cd /usr/share/aiis/packages
-sudo wget http://download.teamviewer.com/download/teamviewer_linux.deb
+/bin/sh -c 'echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections'
+sudo apt-get install -qq ttf-mscorefonts-installer && sudo apt-get install -qq ubuntu-restricted-addons && sudo apt-get install -qq gstreamer0.10-plugins-bad-multiverse && sudo apt-get install -qq libavcodec-extra-53 && sudo apt-get install -qq unrar 
 if [ $? != 0 ] 
 then 
-	echo "Error en la descarga de teamviewer, reintentando"
-	sudo rm /usr/share/aiis/packages/teamviewer_linux.deb
-	cd /usr/share/aiis/packages/
-	sudo wget http://download.teamviewer.com/download/teamviewer_linux.deb
+	echo "Error en la instalacion de ubuntu-restricted-extras, Intentando reinstalar"
+	sudo apt-get install -qq ttf-mscorefonts-installer && sudo apt-get install -qq ubuntu-restricted-addons && sudo apt-get install -qq gstreamer0.10-plugins-bad-multiverse && sudo apt-get install -qq libavcodec-extra-53 && sudo apt-get install -qq unrar 
 	if [ $? != 0 ]
 	then 
 		exit 100
 	fi
 fi
-
-sudo dpkg -i /usr/share/aiis/packages/teamviewer_linux.deb
-
+adduser $1 wireshark
 exit 0

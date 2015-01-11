@@ -20,6 +20,13 @@
 
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
-test ! -f /usr/share/aiis/packages/datamodeler_4.0.1.836-2_all.deb && wget https://www.dropbox.com/s/9s1h3a3o8d5ueh9/datamodeler_4.0.1.836-2_all.deb
-sudo dpkg -i /usr/share/aiis/packages/datamodeler_4.0.1.836-2_all.deb
-exit
+sudo wget https://www.dropbox.com/s/9s1h3a3o8d5ueh9/datamodeler_4.0.1.836-2_all.deb
+valor=174163150
+descarga=$(stat -c %s /usr/share/aiis/packages/datamodeler_4.0.1.836-2_all.deb)
+if [ "$descarga" == "$valor" ]
+then
+	sudo dpkg -i /usr/share/aiis/packages/datamodeler_4.0.1.836-2_all.deb
+	exit 0
+else
+	exit 100
+fi

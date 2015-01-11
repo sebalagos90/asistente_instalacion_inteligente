@@ -18,5 +18,5 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get purge -y smartgithg
-exit
+sudo apt-get purge -qq smartgithg
+exit 0

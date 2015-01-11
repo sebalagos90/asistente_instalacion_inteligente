@@ -25,7 +25,19 @@ export DEBIAN_FRONTEND=noninteractive
 
 \curl -sSL https://get.rvm.io | bash -s stable
 source /etc/profile.d/rvm.sh
+if [ $? != 0 ]
+then 
+	echo "Error en la instalacion de ruby rvm, Intentando reinstalar"
+	\curl -sSL https://get.rvm.io | bash -s stable
+	source /etc/profile.d/rvm.sh
+	if [ $? != 0 ]
+	then 
+		exit 100
+	fi
+fi
+
+
 #Añadiendo el usuario al grupo rvm
 adduser $1 rvm
 
-exit
+exit 0

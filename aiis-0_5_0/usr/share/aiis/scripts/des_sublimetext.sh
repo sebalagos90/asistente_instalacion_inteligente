@@ -19,4 +19,4 @@
 
 export DEBIAN_FRONTEND=noninteractive
 rm -R /home/$1/Aplicaciones/SublimeText
-exit
+exit 0

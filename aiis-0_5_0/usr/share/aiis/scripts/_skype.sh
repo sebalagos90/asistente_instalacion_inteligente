@@ -19,9 +19,20 @@
 
 export DEBIAN_FRONTEND=noninteractive
 #Instalando dependencias de Skype
-sudo apt-get install -y libqt4-dbus libqt4-network libqt4-webkit libqt4-xml libqtcore4 libqtgui4
-
+sudo apt-get install -qq libqt4-dbus libqt4-network libqt4-webkit libqt4-xml libqtcore4 libqtgui4
 cd /usr/share/aiis/packages
-test ! -f /usr/share/aiis/packages/skype-ubuntu-precise_4.3.0.37-1_i386.deb && wget http://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb
+sudo wget http://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb
 sudo dpkg -i /usr/share/aiis/packages/skype-ubuntu-precise_4.3.0.37-1_i386.deb
-exit
+if [ $? != 0 ]
+then 
+	echo "Error en la instalacion de skype, Intentando reinstalar"
+	sudo rm /usr/share/aiis/packages/skype-ubuntu-precise_4.3.0.37-1_i386.deb
+	cd /usr/share/aiis/packages/
+	sudo wget http://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb
+	sudo dpkg -i /usr/share/aiis/packages/skype-ubuntu-precise_4.3.0.37-1_i386.deb
+	if [ $? != 0 ]
+	then 
+		exit 100
+	fi
+fi
+exit 0

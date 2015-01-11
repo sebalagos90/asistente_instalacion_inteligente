@@ -19,5 +19,5 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get purge -y argouml
-exit
+sudo apt-get purge -qq argouml
+exit 0

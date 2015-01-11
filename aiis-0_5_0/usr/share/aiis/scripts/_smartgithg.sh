@@ -19,7 +19,17 @@
 
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
-sudo apt-get install openjdk-7-jre git -y
-test ! -f /usr/share/aiis/packages/smartgit-6_5_1.deb && wget http://www.syntevo.com/download/smartgit/smartgit-6_5_1.deb
+sudo wget http://www.syntevo.com/download/smartgit/smartgit-6_5_1.deb
+if [ $? != 0 ]
+then 
+	echo "Error en la descarga de smartgithg, Intentando reinstalar"
+	sudo rm /usr/share/aiis/packages/smartgit-6_5_1.deb
+	cd /usr/share/aiis/packages/
+	sudo wget http://www.syntevo.com/download/smartgit/smartgit-6_5_1.deb
+	if [ $? != 0 ] 
+	then 
+		exit 100
+	fi
+fi
 sudo dpkg -i /usr/share/aiis/packages/smartgit-6_5_1.deb
-exit
+exit 0

@@ -19,5 +19,5 @@
 
 export DEBIAN_FRONTEND=noninteractive
 #Instalando dependencias de Skype
-sudo apt-get purge -y skype
-exit
+sudo apt-get purge -qq skype
+exit 0

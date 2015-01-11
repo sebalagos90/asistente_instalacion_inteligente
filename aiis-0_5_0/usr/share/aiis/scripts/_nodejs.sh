@@ -21,4 +21,15 @@ export DEBIAN_FRONTEND=noninteractive
 
 curl -sL https://deb.nodesource.com/setup | sudo bash -
 
-sudo apt-get install -y nodejs
+sudo apt-get install -qq nodejs
+if [ $? != 0 ]
+then 
+	echo "Error en la instalacion de nodejs, Intentando reinstalar"
+	curl -sL https://deb.nodesource.com/setup | sudo bash -
+	sudo apt-get install -qq nodejs
+	if [ $? != 0 ]
+	then 
+		exit 100
+	fi
+fi
+exit 0

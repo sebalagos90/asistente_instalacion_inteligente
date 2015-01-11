@@ -19,6 +19,18 @@
 
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
-test ! -f /usr/share/aiis/packages/download\?dl\=packages%2Fubuntu%2Fdropbox_1.6.2_i386.deb  && wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_1.6.2_i386.deb
+sudo wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_1.6.2_i386.deb
 sudo dpkg -i /usr/share/aiis/packages/download\?dl\=packages%2Fubuntu%2Fdropbox_1.6.2_i386.deb 
-exit
+if [ $? != 0 ]
+then 
+	echo "Error en la instalacion de dropbox, Intentando reinstalar"
+	sudo rm /usr/share/aiis/packages/download\?dl\=packages%2Fubuntu%2Fdropbox_1.6.2_i386.deb 
+	cd /usr/share/aiis/packages/
+	sudo wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_1.6.2_i386.deb
+	sudo dpkg -i /usr/share/aiis/packages/download\?dl\=packages%2Fubuntu%2Fdropbox_1.6.2_i386.deb 
+	if [ $? != 0 ]
+	then 
+		exit 100
+	fi
+fi
+exit 0

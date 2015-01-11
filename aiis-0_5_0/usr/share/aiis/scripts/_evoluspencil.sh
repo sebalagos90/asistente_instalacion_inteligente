@@ -22,7 +22,19 @@ export DEBIAN_FRONTEND=noninteractive
 
 cd /usr/share/aiis/packages
 #dependencias Firefox??? que!!!!
-sudo apt-get install -y firefox firefox-locale-es
-test ! -f /usr/share/aiis/packages/evoluspencil_2.0.5_all.deb && wget https://evoluspencil.googlecode.com/files/evoluspencil_2.0.5_all.deb
+sudo apt-get install -qq firefox firefox-locale-es
+sudo wget https://evoluspencil.googlecode.com/files/evoluspencil_2.0.5_all.deb
 sudo dpkg -i /usr/share/aiis/packages/evoluspencil_2.0.5_all.deb
-exit
+if [ $? != 0 ]
+then 
+	echo "Error en la instalacion de evoluspencil, Intentando reinstalar"
+	sudo rm /usr/share/aiis/packages/evoluspencil_2.0.5_all.deb
+	cd /usr/share/aiis/packages/
+	sudo wget https://evoluspencil.googlecode.com/files/evoluspencil_2.0.5_all.deb
+	sudo dpkg -i /usr/share/aiis/packages/evoluspencil_2.0.5_all.deb
+	if [ $? != 0 ]
+	then 
+		exit 100
+	fi
+fi
+exit 0

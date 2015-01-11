@@ -20,5 +20,5 @@
 
 export DEBIAN_FRONTEND=noninteractive
 #Instalando dependencias del balsamiq mockup
-sudo apt-get purge -y evoluspencil
-exit
+sudo apt-get purge -qq evoluspencil
+exit 0
