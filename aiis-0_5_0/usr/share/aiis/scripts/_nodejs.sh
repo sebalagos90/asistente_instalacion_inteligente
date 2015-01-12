@@ -17,6 +17,7 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+apt-get install -q -y curl
 curl -sL https://deb.nodesource.com/setup | sudo bash -
 apt-get install -qq nodejs
 exit

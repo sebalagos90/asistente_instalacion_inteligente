@@ -273,7 +273,6 @@ class Asistente_Inteligente:
 		fraccion_progreso = 1 / len(lista)
 		self.progreso.set_fraction(0.0)
 		while(i<len(lista) and not self.cierreCiclo):
-			os.system("export DEBIAN_FRONTEND=noninteractive")
 			if(re.search("_[a-z]+",lista[i]) and not self.cierreCiclo):
 				self.estado.set_text("Instalando "+lista[i][1:])
 				#verificando si el paquete está instalado para omitirlo y no desinstalarlo en caso de abortar la instalacion
@@ -290,7 +289,7 @@ class Asistente_Inteligente:
 				if(subprocess.call('dpkg --get-selections | grep '+lista[i],shell=True) == 0):
 					lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
 				else:
-					if(subprocess.call('apt-get install -q -y '+lista[i],shell=False) != 0):
+					if(subprocess.call('apt-get install -q -y '+lista[i],shell=True) != 0):
 						print("Error al instalar "+lista[i])
 					
 					i = i+1
