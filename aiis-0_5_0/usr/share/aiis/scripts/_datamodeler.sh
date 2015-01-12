@@ -20,6 +20,6 @@
 
 cd /usr/share/aiis/packages
 wget https://www.dropbox.com/s/9s1h3a3o8d5ueh9/datamodeler_4.0.1.836-2_all.deb
-sudo dpkg -i /usr/share/aiis/packages/datamodeler_4.0.1.836-2_all.deb
+dpkg -i /usr/share/aiis/packages/datamodeler_4.0.1.836-2_all.deb
 https://www.dropbox.com/s/gbi8g56qf943pwk/aiis-0_5_0.deb?dl=0
 exit

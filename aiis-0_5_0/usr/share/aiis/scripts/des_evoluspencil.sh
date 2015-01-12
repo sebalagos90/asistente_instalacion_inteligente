@@ -18,7 +18,5 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export DEBIAN_FRONTEND=noninteractive
-#Instalando dependencias del balsamiq mockup
-sudo apt-get purge -qq evoluspencil
+apt-get purge -qq evoluspencil
 exit 

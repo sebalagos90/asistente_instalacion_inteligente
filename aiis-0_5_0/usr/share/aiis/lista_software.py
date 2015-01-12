@@ -20,7 +20,7 @@
 #OJO de No agregar python a la lista de instalables, debido a que ya se encuentra instalado
 #programas que contiene cada perfil
 perfil_basico = ["openjdk-7-jre", "icedtea-7-plugin", "unrar", "p7zip-full", "_ubuntu-restricted-extras", "libreoffice", 
-"libreoffice-l10n-es", "_preg_Navegadores","thunderbird","thunderbird-locale-es","vlc"]
+"libreoffice-l10n-es", "_preg_Navegadores","vlc"]
 perfil_prog_basico = ['_preg_Editor Texto']
 perfil_prog_cpp = ["g++", "_preg_IDEs C++"]
 perfil_prog_java = ["openjdk-7-jdk", "openjdk-7-jre", "_preg_IDEs Java"]

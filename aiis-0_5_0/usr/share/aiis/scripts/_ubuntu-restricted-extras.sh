@@ -20,5 +20,9 @@
 
 export DEBIAN_FRONTEND=noninteractive
 /bin/sh -c 'echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections'
-sudo apt-get install -qq ttf-mscorefonts-installer && sudo apt-get install -qq ubuntu-restricted-addons && sudo apt-get install -qq gstreamer0.10-plugins-bad-multiverse && sudo apt-get install -qq libavcodec-extra-53 && sudo apt-get install -qq unrar 
+apt-get install -q -y ttf-mscorefonts-installer
+apt-get install -q -y ubuntu-restricted-addons
+apt-get install -q -y gstreamer0.10-plugins-bad-multiverse
+apt-get install -q -y libavcodec-extra-53
+apt-get install -q -y unrar 
 exit

@@ -17,8 +17,7 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
 wget http://download.teamviewer.com/download/teamviewer_linux.deb
-sudo dpkg -i /usr/share/aiis/packages/teamviewer_linux.deb
+dpkg -i /usr/share/aiis/packages/teamviewer_linux.deb
 exit

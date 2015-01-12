@@ -18,9 +18,8 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 cd /usr/share/aiis/packages
 wget https://www.dropbox.com/s/65b9lpdjr5etvz9/argouml_0.34-1.deb
-sudo dpkg -i /usr/share/aiis/packages/argouml_0.34-1.deb
+dpkg -i /usr/share/aiis/packages/argouml_0.34-1.deb
 exit
 

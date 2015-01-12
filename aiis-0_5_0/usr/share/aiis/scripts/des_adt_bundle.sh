@@ -17,7 +17,6 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export DEBIAN_FRONTEND=noninteractive
 rm -R /home/$1/Aplicaciones/adt-bundle-linux-x86-20140702
 chmod -R 777 /home/$1/Aplicaciones/
 exit 

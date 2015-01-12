@@ -17,8 +17,7 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
 wget http://www.syntevo.com/download/smartgit/smartgit-6_5_1.deb
-sudo dpkg -i /usr/share/aiis/packages/smartgit-6_5_1.deb
+dpkg -i /usr/share/aiis/packages/smartgit-6_5_1.deb
 exit 

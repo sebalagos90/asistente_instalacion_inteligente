@@ -17,8 +17,6 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export DEBIAN_FRONTEND=noninteractive
-
 cd /usr/share/aiis/packages/
 wget http://dl.google.com/android/adt/adt-bundle-linux-x86-20140702.zip
 mkdir /home/$1/Aplicaciones

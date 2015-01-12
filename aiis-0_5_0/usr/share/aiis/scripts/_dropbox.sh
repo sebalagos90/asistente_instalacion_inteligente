@@ -20,5 +20,5 @@
 export DEBIAN_FRONTEND=noninteractive
 cd /usr/share/aiis/packages
 wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_1.6.2_i386.deb
-sudo dpkg -i /usr/share/aiis/packages/download\?dl\=packages%2Fubuntu%2Fdropbox_1.6.2_i386.deb 
+dpkg -i /usr/share/aiis/packages/download\?dl\=packages%2Fubuntu%2Fdropbox_1.6.2_i386.deb 
 exit

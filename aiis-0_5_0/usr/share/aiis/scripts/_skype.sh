@@ -17,10 +17,9 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export DEBIAN_FRONTEND=noninteractive
 #Instalando dependencias de Skype
-sudo apt-get install -qq libqt4-dbus libqt4-network libqt4-webkit libqt4-xml libqtcore4 libqtgui4
+apt-get install -q -y libqt4-dbus libqt4-network libqt4-webkit libqt4-xml libqtcore4 libqtgui4
 cd /usr/share/aiis/packages
 wget http://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb
-sudo dpkg -i /usr/share/aiis/packages/skype-ubuntu-precise_4.3.0.37-1_i386.deb
+dpkg -i /usr/share/aiis/packages/skype-ubuntu-precise_4.3.0.37-1_i386.deb
 exit

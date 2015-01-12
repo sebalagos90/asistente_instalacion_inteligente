@@ -18,11 +18,9 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export DEBIAN_FRONTEND=noninteractive
-
 cd /usr/share/aiis/packages
 #dependencias Firefox??? que!!!!
-sudo apt-get install -qq firefox firefox-locale-es
+apt-get install -q -y firefox firefox-locale-es
 wget https://evoluspencil.googlecode.com/files/evoluspencil_2.0.5_all.deb
-sudo dpkg -i /usr/share/aiis/packages/evoluspencil_2.0.5_all.deb
+dpkg -i /usr/share/aiis/packages/evoluspencil_2.0.5_all.deb
 exit

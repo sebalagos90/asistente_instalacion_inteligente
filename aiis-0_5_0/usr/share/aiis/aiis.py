@@ -273,9 +273,9 @@ class Asistente_Inteligente:
 		fraccion_progreso = 1 / len(lista)
 		self.progreso.set_fraction(0.0)
 		while(i<len(lista) and not self.cierreCiclo):
-			self.estado.set_text("Instalando "+lista[i])
 			os.system("export DEBIAN_FRONTEND=noninteractive")
 			if(re.search("_[a-z]+",lista[i]) and not self.cierreCiclo):
+				self.estado.set_text("Instalando "+lista[i][1:])
 				#verificando si el paquete está instalado para omitirlo y no desinstalarlo en caso de abortar la instalacion
 				if(subprocess.call('dpkg --get-selections | grep '+lista[i][1:],shell=True) == 0):
 					lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
@@ -285,12 +285,14 @@ class Asistente_Inteligente:
 					i = i+1
 
 			elif(not self.cierreCiclo):
+				self.estado.set_text("Instalando "+lista[i])
 				#verificando si el paquete está instalado para omitirlo y no desinstalarlo en caso de abortar la instalacion
 				if(subprocess.call('dpkg --get-selections | grep '+lista[i],shell=True) == 0):
 					lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
 				else:
-					self.proceso = subprocess.Popen(["sudo","apt-get","install","-y",lista[i]])
-					self.proceso.wait()
+					if(subprocess.call('apt-get install -q -y '+lista[i],shell=False) != 0):
+						print("Error al instalar "+lista[i])
+					
 					i = i+1
 
 			j = j + fraccion_progreso
@@ -307,6 +309,7 @@ class Asistente_Inteligente:
 		ventana.set_sensitive(True)
 		self.siguiente_vista_interno()
 		print("Programa terminado")
+		return
 		
 	def crearListaPreferencias(self):
 		resultado = []
