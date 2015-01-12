@@ -18,7 +18,7 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from gi.repository import Gtk, GdkPixbuf, GObject
+from gi.repository import Gtk, GLib, GdkPixbuf, GObject
 import time
 import os
 import threading
@@ -26,6 +26,7 @@ import re
 from funciones import *
 from lista_software import diccionario_software, diccionario_pref_soft
 import subprocess
+from subprocess import PIPE
 import sys
 
 class Asistente_Inteligente:
@@ -258,6 +259,14 @@ class Asistente_Inteligente:
 		print("Lista Preguntas")
 		print(self.listaPreguntas)
 		return
+	
+	def actualizarLabelProgresoInstalacion(self, texto):
+		self.estado.set_text(texto)
+		return False
+		
+	def actualizarProgressBar(self, valor):
+		self.progreso.set_fraction(valor)
+		
 
 	def instalarSoftware(self):
 		#~ #Actualizando el Sistema para evitar conflictos de versiones y disponibilidad de los paquetes de
@@ -271,20 +280,27 @@ class Asistente_Inteligente:
 
 		#####		INSTALACION DEL SOFTWARE SELECCIONADO      #######
 		fraccion_progreso = 1 / len(lista)
-		self.progreso.set_fraction(0.0)
+		GLib.idle_add(self.actualizarProgressBar, 0.0)
+		
+		#self.progreso.set_fraction(0.0)
 		while(i<len(lista) and not self.cierreCiclo):
 			if(re.search("_[a-z]+",lista[i]) and not self.cierreCiclo):
-				self.estado.set_text("Instalando "+lista[i][1:])
+				GLib.idle_add(self.actualizarLabelProgresoInstalacion, "Instalando "+lista[i][1:])
+				#self.estado.set_text("Instalando "+lista[i][1:])
 				#verificando si el paquete está instalado para omitirlo y no desinstalarlo en caso de abortar la instalacion
 				if(subprocess.call('dpkg --get-selections | grep '+lista[i][1:],shell=True) == 0):
 					lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
 				else:
-					self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/"+lista[i]+".sh",USER_NAME])
-					self.proceso.wait()
+					self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/"+lista[i]+".sh",USER_NAME], stdout=PIPE, stderr=PIPE)
+					stdout,stderr = self.proceso.communicate()
+					print("Salida de "+lista[i])
+					print(stdout)
 					i = i+1
 
 			elif(not self.cierreCiclo):
-				self.estado.set_text("Instalando "+lista[i])
+				GLib.idle_add(self.actualizarLabelProgresoInstalacion, "Instalando "+lista[i])
+				#~ hilo = threading.Thread(target=self.estado.set_text,args=("Instalando "+lista[i][1:],))
+				#~ hilo.start()
 				#verificando si el paquete está instalado para omitirlo y no desinstalarlo en caso de abortar la instalacion
 				if(subprocess.call('dpkg --get-selections | grep '+lista[i],shell=True) == 0):
 					lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
@@ -295,7 +311,9 @@ class Asistente_Inteligente:
 					i = i+1
 
 			j = j + fraccion_progreso
-			self.progreso.set_fraction(j)
+			#~ hilo_progreso = threading.Thread(target=self.progreso.set_fraction,args=(j,))
+			#~ hilo_progreso.start()
+			GLib.idle_add(self.actualizarProgressBar,j)
 
 
 		#####		DESINSTALACION DE SOFTWARE SI SE ABORTA LA OPERACION		#####
@@ -304,8 +322,11 @@ class Asistente_Inteligente:
 		#el asistente desinstalará todo el software instalado
 		if(self.cierreCiclo and i > 0):
 			self.desinstalarSoftware(lista,i)
-
+		GLib.idle_add(self.estado.set_text("Limpiando el sistema ..."))
+		subprocess.call('apt-get -q -y autoremove',shell=True)
+		subprocess.call('rm -R /usr/share/aiis/packages',shell=True)
 		ventana.set_sensitive(True)
+		
 		self.siguiente_vista_interno()
 		print("Programa terminado")
 		return

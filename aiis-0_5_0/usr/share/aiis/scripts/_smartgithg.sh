@@ -18,6 +18,6 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 cd /usr/share/aiis/packages
-wget http://www.syntevo.com/download/smartgit/smartgit-6_5_1.deb
-dpkg -i /usr/share/aiis/packages/smartgit-6_5_1.deb
+wget http://www.syntevo.com/download/smartgit/smartgit-6_5_3.deb
+dpkg -i /usr/share/aiis/packages/smartgit-6_5_3.deb
 exit 

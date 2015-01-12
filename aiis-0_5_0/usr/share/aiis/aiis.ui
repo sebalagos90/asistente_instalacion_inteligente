@@ -393,7 +393,7 @@ Disfrute su Sistema con el Software que necesita.</property>
       <object class="GtkLabel" id="label2">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Elija el software que desea que instale por Usted:</property>
+        <property name="label" translatable="yes">Seleccione el software que desea instalar de la categoría:</property>
         <property name="justify">center</property>
         <property name="wrap">True</property>
         <attributes>
