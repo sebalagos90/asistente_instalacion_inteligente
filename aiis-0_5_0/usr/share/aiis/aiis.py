@@ -272,12 +272,13 @@ class Asistente_Inteligente:
 		#~ #Actualizando el Sistema para evitar conflictos de versiones y disponibilidad de los paquetes de
 		#~ #los respositorios
 		#~ 
+		self.iterador = 0
 		os.system("mkdir /usr/share/aiis/packages")
 		self.actualizarSistema()
 		lista = self.listaSoftwareInstalar
 		i = 0
 		j = 0.0
-
+		
 		#####		INSTALACION DEL SOFTWARE SELECCIONADO      #######
 		fraccion_progreso = 1 / len(lista)
 		GLib.idle_add(self.actualizarProgressBar, 0.0)
@@ -296,6 +297,7 @@ class Asistente_Inteligente:
 					print("Salida de "+lista[i])
 					print(stdout)
 					i = i+1
+					self.iterador = i
 
 			elif(not self.cierreCiclo):
 				GLib.idle_add(self.actualizarLabelProgresoInstalacion, "Instalando "+lista[i])
@@ -313,6 +315,7 @@ class Asistente_Inteligente:
 					#~ print("Error al instalar "+lista[i])
 					
 					i = i+1
+					self.iterador = i
 
 			j = j + fraccion_progreso
 			#~ hilo_progreso = threading.Thread(target=self.progreso.set_fraction,args=(j,))
@@ -327,19 +330,22 @@ class Asistente_Inteligente:
 		if(self.cierreCiclo and i > 0):
 			self.desinstalarSoftware(lista,i)
 			
-		else:
+		elif(not self.cierreCiclo and i > 0 ):
 			GLib.idle_add(self.actualizarLabelProgresoInstalacion,"Limpiando el sistema ...")
 			self.proceso = subprocess.Popen(["apt-get", "-q", "-y", "autoremove"])
 			self.proceso.wait()
 			self.proceso = subprocess.Popen(["rm", "-R", "/usr/share/aiis/packages"])
 			self.proceso.wait()
 		
-		ventana.set_sensitive(True)
-		
-		self.siguiente_vista_interno()
+		GLib.idle_add(self.cambiarEstadoVentana, True)
+		GLib.idle_add(self.siguiente_vista_interno)
 		print("Programa terminado")
 		return
 		
+	def cambiarEstadoVentana(self, estado):
+		ventana.set_sensitive(estado)
+		return False
+	
 	def crearListaPreferencias(self):
 		resultado = []
 		i = 0
