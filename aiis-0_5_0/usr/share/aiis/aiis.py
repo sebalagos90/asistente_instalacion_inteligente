@@ -305,8 +305,12 @@ class Asistente_Inteligente:
 				if(subprocess.call('dpkg --get-selections | grep '+lista[i],shell=True) == 0):
 					lista.pop(i) #se saca el elemento de la lista y no se incrementa el iterador i
 				else:
-					if(subprocess.call('apt-get install -q -y '+lista[i],shell=True) != 0):
-						print("Error al instalar "+lista[i])
+					self.proceso = subprocess.Popen(["apt-get", "install", "-q", "-y",lista[i]], stdout=PIPE, stderr=PIPE)
+					stdout,stderr = self.proceso.communicate()
+					print("Salida de "+lista[i])
+					print(stdout)
+					subprocess.call(' '+lista[i],shell=True)
+					#~ print("Error al instalar "+lista[i])
 					
 					i = i+1
 
@@ -322,9 +326,14 @@ class Asistente_Inteligente:
 		#el asistente desinstalará todo el software instalado
 		if(self.cierreCiclo and i > 0):
 			self.desinstalarSoftware(lista,i)
-		GLib.idle_add(self.estado.set_text("Limpiando el sistema ..."))
-		subprocess.call('apt-get -q -y autoremove',shell=True)
-		subprocess.call('rm -R /usr/share/aiis/packages',shell=True)
+			
+		else:
+			GLib.idle_add(self.actualizarLabelProgresoInstalacion,"Limpiando el sistema ...")
+			self.proceso = subprocess.Popen(["apt-get", "-q", "-y", "autoremove"])
+			self.proceso.wait()
+			self.proceso = subprocess.Popen(["rm", "-R", "/usr/share/aiis/packages"])
+			self.proceso.wait()
+		
 		ventana.set_sensitive(True)
 		
 		self.siguiente_vista_interno()
@@ -352,22 +361,28 @@ class Asistente_Inteligente:
 		self.cierreCiclo = True
 		#parando los procesos en segundo plano
 		self.proceso.kill()
-		os.system("sudo pkill -9 wget")
-		os.system("sudo pkill -9 apt")
+		self.proceso = subprocess.Popen(["sudo","pkill","-9","wget"])
+		self.proceso.wait()
+		self.proceso = subprocess.Popen(["sudo","pkill","-9","apt"])
+		self.proceso.wait()
+		self.proceso = subprocess.Popen(["sudo","pkill","-9","apt-get"])
+		self.proceso.wait()
+		return
 
 	def actualizarSistema(self):
 		#Actualizando repositorios del sistema
-
-		self.estado.set_text("Actualizando los repositorios del sistema ... ")
-		self.proceso = subprocess.Popen(["sudo","apt-get","update"])
-		self.proceso.wait()
-		self.progreso.set_fraction(0.5)
-
-		#Actualizando el sistema
-		self.estado.set_text("Actualizando el sistema. Por favor espere ... ")
-		self.proceso = subprocess.Popen(["sudo","apt-get","upgrade","-y"])
-		self.proceso.wait()
-		self.progreso.set_fraction(1.0)
+		if(not self.cierreCiclo):
+			GLib.idle_add(self.actualizarLabelProgresoInstalacion,"Actualizando los repositorios del sistema ... ")
+			self.proceso = subprocess.Popen(["sudo","apt-get","update"])
+			self.proceso.wait()
+			GLib.idle_add(self.actualizarProgressBar, 0.5)
+		
+		if(not self.cierreCiclo):
+			#Actualizando el sistema
+			GLib.idle_add(self.actualizarLabelProgresoInstalacion,"Actualizando el sistema. Por favor espere ... ")
+			self.proceso = subprocess.Popen(["sudo","apt-get","upgrade","-y"])
+			self.proceso.wait()
+			GLib.idle_add(self.actualizarProgressBar, 1.0)
 		return
 
 	def solicitarSoftware(self,scripts):
@@ -408,6 +423,10 @@ class Asistente_Inteligente:
 
 		self.proceso = subprocess.Popen(["sudo","pkill","-9","apt"])
 		self.proceso.wait()
+		
+		self.proceso = subprocess.Popen(["sudo","pkill","-9","apt-get"])
+		self.proceso.wait()
+		
 		#En caso de que este programa no suelte a apt, entonces lo obligamos eliminando los locks
 
 		os.system("sudo rm /var/lib/dpkg/lock")
@@ -422,21 +441,24 @@ class Asistente_Inteligente:
 		fraccion_progreso = 1 / i
 
 		while(k<i):
-			self.estado.set_text("Desinstalando "+lista[k])
-			os.system("export DEBIAN_FRONTEND=noninteractive")
 			if(re.search("_[a-z]+",lista[k])):
-				self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/des"+lista[k]+".sh",USER_NAME])
-				self.proceso.wait()
+				GLib.idle_add(self.actualizarLabelProgresoInstalacion, "Desinstalando "+lista[k][1:])
+				self.proceso = subprocess.Popen(["/usr/share/aiis/scripts/des"+lista[k]+".sh",USER_NAME], stdout=PIPE, stderr=PIPE)
+				stdout,stderr = self.proceso.communicate()
 			else:
-				self.proceso = subprocess.Popen(["sudo","apt-get", "remove","-y",lista[k]])
-				self.proceso.wait()
+				GLib.idle_add(self.actualizarLabelProgresoInstalacion, "Desinstalando "+lista[k])
+				self.proceso = subprocess.Popen(["sudo","apt-get", "remove","-y",lista[k]], stdout=PIPE, stderr=PIPE)
+				stdout,stderr = self.proceso.communicate()
 
 			j = j - fraccion_progreso
 			k = k+1
-			self.progreso.set_fraction(j)
+			GLib.idle_add(self.actualizarProgressBar, j)
 
 		#Eliminando paquetes huerfanos para limpiar el sistema
-		self.proceso = subprocess.Popen(["sudo","apt-get", "autoremove","-y"])
+		GLib.idle_add(self.actualizarLabelProgresoInstalacion,"Limpiando el sistema ...")
+		self.proceso = subprocess.Popen(["apt-get", "-q", "-y", "autoremove"])
+		self.proceso.wait()
+		self.proceso = subprocess.Popen(["rm", "-R", "/usr/share/aiis/packages"])
 		self.proceso.wait()
 
 	def eliminarColumnas(self):
